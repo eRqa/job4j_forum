@@ -17,6 +17,7 @@
 <div class="container mt-3">
     <div class="row">
         <h4>Форум job4j</h4>
+        <a href="<c:url value='/create'/>">Добавить тему</a>
     </div>
     <div class="row">
         <table class="table">
@@ -28,7 +29,9 @@
             <tbody>
             <c:forEach items="${posts}" var="post">
                 <tr>
-                    <td><c:out value="${post.name}"/></td>
+                    <td>
+                        <a href="<c:url value='/show?id=${post.id}'/>"><c:out value="${post.name}"/></a>
+                    </td>
                 </tr>
             </c:forEach>
             </tbody>
