@@ -12,6 +12,8 @@
             <td><input type='text' name='name' value="${post.name}"></td>
             <td>Описание:</td>
             <td><input type='text' name='desc' value="${post.desc}"></td>
+            <td>Дата создания:</td>
+            <td><input type='text' name='desc' value="${post.created.getTime()}"></td>
         </tr>
         <tr>
             <td colspan='2'><input name="submit" type="submit" value="Сохранить"/></td>

@@ -2,42 +2,36 @@ package ru.job4j.forum.service;
 
 import org.springframework.stereotype.Service;
 import ru.job4j.forum.model.Post;
+import ru.job4j.forum.store.PostRepository;
 
 import java.util.*;
-import java.util.concurrent.atomic.AtomicInteger;
 
 @Service
 public class PostService {
 
-    private final Map<Integer, Post> posts = new HashMap<>();
-    private final AtomicInteger size = new AtomicInteger(1);
+    private final PostRepository posts;
 
-    public PostService() {
-        Post p = Post.of("Продаю машину ладу 01");
-        p.setDesc("Тачло в отличном состоянии. Салон кожа рожа все дела. " +
-                "Все что нужно дует светит моргает. Одной рукой рулю, другой слезы счастья вытираю. " +
-                "Наверху и внизу панорама");
-        p.setCreated(new GregorianCalendar(2021, Calendar.MAY , 21));
-        p.setId(1);
-        posts.put(1, p);
+    public PostService(PostRepository posts) {
+        this.posts = posts;
     }
 
     public List<Post> getAll() {
-        return new ArrayList<>(posts.values());
+        List<Post> rsl = new ArrayList<>();
+        posts.findAll().forEach(rsl::add);
+        return rsl;
     }
 
     public void add(Post post) {
-        post.setId(size.incrementAndGet());
         post.setCreated(Calendar.getInstance());
-        posts.put(post.getId(), post);
+        posts.save(post);
     }
 
     public void edit(Post post) {
-        posts.put(post.getId(), post);
+        posts.save(post);
     }
 
-    public Post findPostById(int id) {
-        return posts.get(id);
+    public Post findPostById(Long id) {
+        return posts.findPostById(id);
     }
 
 }
